@@ -19,6 +19,8 @@ pcf(listClone);
 // Text Field Search Function
 //*****************************************************************************************
 $(".search-input").keyup(function() {
+      //erase any lingering transparency from fadeIn function
+      listClone.css( "opacity", 1);
       // move back to page 1 of pagination
       $(".pagination > ul > li > a").attr("href", "#");
       $(".pagination > ul > li:first-child > a").attr("class", "active");
@@ -95,8 +97,10 @@ function pcf (list) {
   for (var i = 1; i < studentsPerPage+1; i++) {
     $("#show-index-" + i).fadeIn();
   }
-  // pagination class element construction function 
-  $(".pagination > ul > li > a").click(function() {
+  // pagination class element construction function
+$(".pagination > ul > li > a").click(function() {
+      //erase any lingering transparency from fadeIn function
+      listClone.css( "opacity", 1);
       // hide everything in the list first, but all child elements, not parent element itself
       list.hide();
       // make pagination link class active when clicked and remove from unlicked element
