@@ -75,13 +75,14 @@ function pcf (list) {
   // count total number of links required for pagination
   var numLink = Math.ceil(totalStudents/studentsPerPage);
   // pagination link html string constructor
+  $(".page").append("<div class='pagination'>");
   var pagStr = "<ul>";
   // add one page link per ten students
   for (var i=0; i < numLink; i++) {
     pagStr += "";
     pagStr += "<li> <a>" + (i+1) + "</a> </li>";
   }
-  pagStr +="</ul>";
+  pagStr +="</ul></div>";
   // assign inner html of pagination div with constructed pagination string, 1st element class set to active
   $(".pagination").html(pagStr);
   // stop pagination links from going to the top of the page when clicked. It's confusing.
