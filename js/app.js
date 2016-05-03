@@ -10,10 +10,11 @@ var searchHTML = "<h2>Students</h2> <div class='student-search'> <input class='s
 $(".page-header").html(searchHTML);
 //declare number of students per page
 var studentsPerPage = 10;
+
+
 //Create a global list clone at the start for manipulation, so that we are always storing a copy of the full list globally
-//Create no operation function
-var listClone =  $(".student-list > li").clone()
-  console.log(listClone)
+var listClone =  $(".student-list > li").clone();
+console.log(listClone);
 //construct initial page
 pcf(listClone);
 //*****************************************************************************************
@@ -24,7 +25,7 @@ $(".search-input").keyup(function() {
       $(".pagination > ul > li > a").attr("href", "#");
       $(".pagination > ul > li:first-child > a").attr("class", "active");
        //grab text from text input field
-       var searchBoxText = $(this).val();
+       var searchBoxText = $(this).val().toLowerCase();
        //console.log(searchBoxText); - Debugging
        // looping through each li element in the local list clone
        listClone.each(function(index) {
@@ -45,7 +46,7 @@ $(".search-input").keyup(function() {
                //add a class handler for list items that won't be displayed
              $(this).attr("id", "!display");
            }
-         })
+         });
                   // run pagination contructor function (pcf) on the new list
             pcf(listClone);
        });
@@ -54,6 +55,8 @@ $(".search-input").keyup(function() {
 //*****************************************************************************************
 //define pagination constructor function (pcf)
 function pcf (list) {
+  // remove the noResults message if it was appended from a previous search
+  $(".noResults").remove();
   //start by hiding everything with animation for extra credit
   list.hide().fadeOut("slow");
   //populate html with new list
@@ -63,11 +66,15 @@ function pcf (list) {
   list.each(function(index) {
     if ($(this).attr("id") !== "!display") {
     $(this).attr("id", "show-index-"+(studentCount));
-      studentCount++
+      studentCount++;
   }
   });
   //count total students to be shown for calculating the number of pagination links
   var totalStudents = studentCount-1;
+  //if search comes back with no results, append message to the list stating to the effect
+  if (totalStudents === 0) {
+    $(".student-list").append("<li class='noResults'>No Students Match Your Search.</li>");
+  }
   //console.log(totalStudents);
   //count total number of links required for pagination
   var numLink = Math.ceil(totalStudents/studentsPerPage);
@@ -93,13 +100,12 @@ function pcf (list) {
   // default set active class to the first element on page load
   $(".pagination > ul > li:first-child > a").attr("class", "active");
   //remove id elements created in any previous pagination events
-  // assign IDs to the list items for some show/hide magic later
   //console.log($(".student-list"));
   //showing first set of students and hiding the rest with animation for extra credit
   for (var i = 1; i < studentsPerPage+1; i++) {
     $("#show-index-" + i).show().fadeIn("slow");
   }
-    //console.log($("#show-index-" + i) + "shown"); 
+    //console.log($("#show-index-" + i) + "shown");
     //console.log($("#show-index-" + i) + "hidden");
 
   // PAGINATION LINK FUNCTION
@@ -125,7 +131,8 @@ function pcf (list) {
       }
 //click function closing braces
   });
+// check
 //pagination constructor function closing braces
-};
+}
 //ready function closing braces
 });
