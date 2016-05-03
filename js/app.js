@@ -1,21 +1,19 @@
-//use strict
+// use strict
 "use strict";
-//ensure that the document is ready before executing code
+// ensure that the document is ready before executing code
 $(document).ready(function() {
 //*********************************************************************
-//Search functionality HTML
+// Search functionality HTML
 //*********************************************************************
-//Construct and insert search header html
+// construct and insert search header html
 var searchHTML = "<h2>Students</h2> <div class='student-search'> <input class='search-input' placeholder='Search for students...'>";
 $(".page-header").html(searchHTML);
 //declare number of students per page
 var studentsPerPage = 10;
-
-
-//Create a global list clone at the start for manipulation, so that we are always storing a copy of the full list globally
+// create a global list clone at the start for manipulation, so that we are always storing a copy of the full list globally
 var listClone =  $(".student-list > li").clone();
 console.log(listClone);
-//construct initial page
+// construct initial page
 pcf(listClone);
 //*****************************************************************************************
 // Text Field Search Function
@@ -26,7 +24,6 @@ $(".search-input").keyup(function() {
       $(".pagination > ul > li:first-child > a").attr("class", "active");
        //grab text from text input field
        var searchBoxText = $(this).val().toLowerCase();
-       //console.log(searchBoxText); - Debugging
        // looping through each li element in the local list clone
        listClone.each(function(index) {
          //wipe pre-applied IDs
@@ -39,29 +36,27 @@ $(".search-input").keyup(function() {
          var LookUpText = nameText + " " + emailText;
          // drop search text to lower case
          var textLower = LookUpText.toLowerCase();
-           //console.log(textLower); -Debugging
          // if the string in the search input box does not match the search string for each li element then...
          if (textLower.indexOf(searchBoxText) == -1) {
-               //console.log($(this))
-               //add a class handler for list items that won't be displayed
+               // add a class handler for list items that won't be displayed
              $(this).attr("id", "!display");
            }
          });
-                  // run pagination contructor function (pcf) on the new list
+            // run pagination contructor function (pcf) on the new list
             pcf(listClone);
        });
 //*****************************************************************************************
 // Pagination Constructor Function (PCF)
 //*****************************************************************************************
-//define pagination constructor function (pcf)
+// define pagination constructor function (pcf)
 function pcf (list) {
   // remove the noResults message if it was appended from a previous search
   $(".noResults").remove();
-  //start by hiding everything with animation for extra credit
-  list.hide().fadeOut("slow");
-  //populate html with new list
+  // start by hiding everything with animation for extra credit
+  list.hide();
+  // populate html with new list
   $(".student-list").html(list);
-  //Count all elements to be possibly shown
+  // count all elements to be possibly shown
   var studentCount = 1;
   list.each(function(index) {
     if ($(this).attr("id") !== "!display") {
@@ -69,17 +64,15 @@ function pcf (list) {
       studentCount++;
   }
   });
-  //count total students to be shown for calculating the number of pagination links
+  // count total students to be shown for calculating the number of pagination links
   var totalStudents = studentCount-1;
-  //if search comes back with no results, append message to the list stating to the effect
+  // if search comes back with no results, append message to the list stating to the effect
   if (totalStudents === 0) {
     $(".student-list").append("<li class='noResults'>No Students Match Your Search.</li>");
   }
-  //console.log(totalStudents);
-  //count total number of links required for pagination
+  // count total number of links required for pagination
   var numLink = Math.ceil(totalStudents/studentsPerPage);
-  //console.log(numLink);
-  //pagination link html string constructor
+  // pagination link html string constructor
   var pagStr = "<ul>";
   // add one page link per ten students
   for (var i=0; i < numLink; i++) {
@@ -87,7 +80,6 @@ function pcf (list) {
     pagStr += "<li> <a>" + (i+1) + "</a> </li>";
   }
   pagStr +="</ul>";
-  //console.log(pagStr);
   // assign inner html of pagination div with constructed pagination string, 1st element class set to active
   $(".pagination").html(pagStr);
   // stop pagination links from going to the top of the page when clicked. It's confusing.
@@ -99,40 +91,30 @@ function pcf (list) {
   $(".pagination > ul > li > a").attr("href", "#");
   // default set active class to the first element on page load
   $(".pagination > ul > li:first-child > a").attr("class", "active");
-  //remove id elements created in any previous pagination events
-  //console.log($(".student-list"));
-  //showing first set of students and hiding the rest with animation for extra credit
+  // showing first set of students and hiding the rest with animation for extra credit
   for (var i = 1; i < studentsPerPage+1; i++) {
-    $("#show-index-" + i).show().fadeIn("slow");
+    $("#show-index-" + i).fadeIn();
   }
-    //console.log($("#show-index-" + i) + "shown");
-    //console.log($("#show-index-" + i) + "hidden");
-
-  // PAGINATION LINK FUNCTION
+  // pagination class element construction function 
   $(".pagination > ul > li > a").click(function() {
       // hide everything in the list first, but all child elements, not parent element itself
-      list.hide().fadeOut("slow");
-      //make pagination link class active when clicked and remove from unlicked element
+      list.hide();
+      // make pagination link class active when clicked and remove from unlicked element
       $(this).parent().parent().children().children().removeClass("active");
       $(this).addClass("active");
-        //console.log($(".pagination"));
-      //get integer for student list show function
+      // get integer for student list show function
       var pageLinkActive = parseInt($(".active").html());
-        //console.log(pageLinkActive);
-      //starting id for element to show
+      // starting id for element to show
       var startId = pageLinkActive * studentsPerPage - studentsPerPage + 1;
-        //console.log(startId);
-      //ending id for element to show
+      // ending id for element to show
       var endId = (startId + studentsPerPage);
-        //console.log(endId);
-      //show elements between start and end ID with animation for extra credit
+      // show elements between start and end ID with animation for extra credit
       for (var i = startId; i < endId; i++) {
-        $("#show-index-" + i).show().fadeIn("slow");
+        $("#show-index-" + i).fadeIn();
       }
-//click function closing braces
+// click function closing braces
   });
-// check
-//pagination constructor function closing braces
+// pagination constructor function closing braces
 }
-//ready function closing braces
+// ready function closing braces
 });
