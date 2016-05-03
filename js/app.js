@@ -8,6 +8,8 @@ $(document).ready(function() {
 // construct and insert search header html
 var searchHTML = "<h2>Students</h2> <div class='student-search'> <input class='search-input' placeholder='Search for students...'>";
 $(".page-header").html(searchHTML);
+// create div for pagination
+$(".page").append("<div class='pagination'></div>");
 //declare number of students per page
 var studentsPerPage = 10;
 // create a global list clone at the start for manipulation, so that we are always storing a copy of the full list globally
@@ -75,14 +77,13 @@ function pcf (list) {
   // count total number of links required for pagination
   var numLink = Math.ceil(totalStudents/studentsPerPage);
   // pagination link html string constructor
-  $(".page").append("<div class='pagination'>");
   var pagStr = "<ul>";
   // add one page link per ten students
   for (var i=0; i < numLink; i++) {
     pagStr += "";
     pagStr += "<li> <a>" + (i+1) + "</a> </li>";
   }
-  pagStr +="</ul></div>";
+  pagStr +="</ul>";
   // assign inner html of pagination div with constructed pagination string, 1st element class set to active
   $(".pagination").html(pagStr);
   // stop pagination links from going to the top of the page when clicked. It's confusing.
