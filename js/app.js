@@ -55,6 +55,8 @@ $(".search-input").keyup(function() {
 function pcf (list) {
   // remove the noResults message if it was appended from a previous search
   $(".noResults").remove();
+  // empty the pagination links class div
+  $(".pagination").empty();
   // start by hiding everything with animation for extra credit
   list.hide();
   // populate html with new list
@@ -75,6 +77,8 @@ function pcf (list) {
   }
   // count total number of links required for pagination
   var numLink = Math.ceil(totalStudents/studentsPerPage);
+  //only paginate if there is more than one page 
+  if (numLink > 1) {
   // pagination link html string constructor
   var pagStr = "<ul>";
   // add one page link per ten students
@@ -85,6 +89,7 @@ function pcf (list) {
   pagStr +="</ul>";
   // assign inner html of pagination div with constructed pagination string, 1st element class set to active
   $(".pagination").html(pagStr);
+  }
   // stop pagination links from going to the top of the page when clicked. It's confusing.
   $(".pagination > ul > li > a").click(function(event) {
       event.preventDefault();
