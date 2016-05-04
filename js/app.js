@@ -14,7 +14,6 @@ $(".page").append("<div class='pagination'></div>");
 var studentsPerPage = 10;
 // create a global list clone at the start for manipulation, so that we are always storing a copy of the full list globally
 var listClone =  $(".student-list > li").clone();
-console.log(listClone);
 // construct initial page
 pcf(listClone);
 //*****************************************************************************************
@@ -42,7 +41,7 @@ $(".search-input").keyup(function() {
          var textLower = LookUpText.toLowerCase();
          // if the string in the search input box does not match the search string for each li element then...
          if (textLower.indexOf(searchBoxText) == -1) {
-               // add a class handler for list items that won't be displayed
+               // add a id handler for list items that won't be displayed
              $(this).attr("id", "!display");
            }
          });
