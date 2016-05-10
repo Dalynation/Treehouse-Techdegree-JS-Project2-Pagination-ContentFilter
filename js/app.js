@@ -5,7 +5,7 @@ $(document).ready(function() {
 //*********************************************************************
 // Search functionality HTML
 //*********************************************************************
-// construct and insert search header html
+// construct and insert search header html. Button reduandant therefore not included.
 var searchHTML = "<h2>Students</h2> <div class='student-search'> <input class='search-input' placeholder='Search for students...'>";
 $(".page-header").html(searchHTML);
 // create div for pagination
@@ -77,7 +77,7 @@ function pcf (list) {
   }
   // count total number of links required for pagination
   var numLink = Math.ceil(totalStudents/studentsPerPage);
-  //only paginate if there is more than one page 
+  //only paginate if there is more than one page
   if (numLink > 1) {
   // pagination link html string constructor
   var pagStr = "<ul>";
